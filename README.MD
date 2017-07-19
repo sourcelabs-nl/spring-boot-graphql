@@ -12,7 +12,7 @@ Running:
 - mvn spring-boot:run
 - You should be able to access GraphiQL using your browser: http://localhost:8080
 
-Sample request:
+Sample request for GraphiQL:
 
 ```graphql
 {
