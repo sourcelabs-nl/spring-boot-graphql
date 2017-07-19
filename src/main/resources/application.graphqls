@@ -1,0 +1,28 @@
+type Query {
+    order(orderId: String!): Order @doc(d: "Finding orders by its identifiers or customer number. orderId is the SOR identifier and unique in SOR. orderReference is an externally provided (WSP) order identifier"),
+    orderItem(orderItemId: String!):OrderItem @doc(d: "Look for orderItems based on SOR orderItemId")
+    cancellations(orderId: String!): [Cancellation] @doc(d: "Find the cancellations for an Order")
+}
+
+type Order @doc(d: "A ShopOrder representation") {
+    orderId: String! @doc(d: "The id of the order"),
+    orderReference: String @doc(d: "The external (WSP) identifier of the order"),
+    totalPrice: String @doc(d: "Order total amount"),
+    dateTimePlaced: String @doc(d: "The dateTime placed")
+    orderItems: [OrderItem] @doc(d: "The order items/lines")
+}
+
+type OrderItem @doc(d: "An item/line from the ShopOrder") {
+    orderItemId: String! @doc(d: "The id of the SOR orderItem"),
+    productTitle: String @doc(d: "Product title / description"),
+    quantityRequested: Long! @doc(d: "The quantity requested by the customer")
+    cancellations: [Cancellation] @doc(d: "The cancellation message for item/line")
+}
+
+type Cancellation  @doc(d: "Defines the cancellation of an item/line from the ShopOrder") {
+    orderId: String! @doc(d: "The id of the order"),
+    orderItemId: String! @doc(d: "The id of the SOR orderItem"),
+    quantityCancelled: Long! @doc(d: "Quantity that has been cancelled"),
+    reason: String @doc(d: "Cancellation reason")
+}
+
