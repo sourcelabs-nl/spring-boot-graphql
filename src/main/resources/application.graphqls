@@ -1,27 +1,47 @@
+# Entry point for retrieving Order data
 type Query {
-    order(orderId: String!): Order @doc(d: "Finding orders by its identifiers or customer number. orderId is the identifier and unique. orderReference is an externally provided order identifier"),
-    orderItem(orderItemId: String!):OrderItem @doc(d: "Look for orderItems based on  orderItemId")
-    cancellations(orderItemId: String!): [Cancellation] @doc(d: "Find the cancellations for an orderItem")
+    # Finding orders by its identifiers or customer number. orderId is the identifier and unique. orderReference is an externally provided order identifier
+    order(orderId: String!): Order,
+    # Look for orderItems based on  orderItemId
+    orderItem(orderItemId: String!):OrderItem
+    # Find the cancellations for an orderItem
+    cancellations(orderItemId: String!): [Cancellation]
 }
 
-type Order @doc(d: "A customer order") {
-    orderId: String! @doc(d: "The id of the order"),
-    orderReference: String @doc(d: "The external identifier of the order"),
-    totalPrice: String @doc(d: "Order total amount"),
-    dateTimePlaced: String @doc(d: "The dateTime placed")
-    orderItems: [OrderItem] @doc(d: "The order items/lines")
+# A customer order
+type Order {
+    # The id of the order
+    orderId: String!
+    # The external identifier of the order
+    orderReference: String,
+    # Order total amount
+    totalPrice: String,
+    # The dateTime placed
+    dateTimePlaced: String,
+    # The order items/lines
+    orderItems: [OrderItem]
 }
 
-type OrderItem @doc(d: "An item/line from the Order") {
-    orderItemId: String! @doc(d: "The id of the  orderItem"),
-    productTitle: String @doc(d: "Product title / description"),
-    quantityRequested: Long! @doc(d: "The quantity requested by the customer")
-    cancellations: [Cancellation] @doc(d: "The cancellation message for item/line")
+# An item/line from the Order
+type OrderItem {
+    # The id of the  orderItem
+    orderItemId: String!,
+    # Product title / description
+    productTitle: String,
+    # The quantity requested by the customer
+    quantityRequested: Long!,
+    # The cancellation message for item/line
+    cancellations: [Cancellation]
 }
 
-type Cancellation  @doc(d: "Defines the cancellations on an orderItem") {
-    orderId: String! @doc(d: "The id of the order"),
-    orderItemId: String! @doc(d: "The id of the  orderItem"),
-    quantityCancelled: Long! @doc(d: "Quantity that has been cancelled"),
-    reason: String @doc(d: "Cancellation reason")
+# Defines the cancellations on an orderItem
+type Cancellation {
+    # The id of the order
+    orderId: String!,
+    # The id of the  orderItem
+    orderItemId: String!,
+    # Quantity that has been cancelled
+    quantityCancelled: Long!,
+    # Cancellation reason
+    reason: String
 }
